@@ -1,0 +1,131 @@
+{% extends "index.html" %}
+
+{% block title %}
+    Teachers
+{% endblock %}
+
+{% block main %}
+{% include 'flash_message.html' %}
+<div class="container">
+    <!-- Header Section -->
+    <div class="row mb-4">
+        <div class="col-12 d-flex justify-content-between align-items-center">
+            <h2 class="mb-0">Teachers</h2>
+            <h5 class="mb-0 text-muted">Teacher / All Teachers</h5>
+        </div>
+    </div>
+
+    <!-- Action Buttons Section -->
+    <div class="row mb-3">
+        <div class="col-12 d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Manage Teachers</h5>
+            <div>
+                <button class="btn btn-success btn-sm me-2" onclick="location.href='/teachers/add'">
+                    Add <i class="bi bi-plus ms-1"></i>
+                </button>
+                <button class="btn btn-danger btn-sm" onclick="deleteSelected()">
+                    Delete <i class="bi bi-trash ms-1"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table Section -->
+    <table class="table table-striped shadow p-4 rounded">
+        <thead class="table-light">
+            <tr>
+                <th><input type="checkbox" class="selectall" onclick="toggleSelectAll(this)"></th>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Specilization</th>
+                <th>Course</th>
+                <th>Experience</th>
+                <th>Mobile Phone</th>
+                <th>Address</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Add teacher rows here -->
+            {% for teacher in teachers %}
+            <tr>
+                <td><input type="checkbox" class="select" data-course-id="{{ teacher.id }}"></td>
+                <td>{{ loop.index }}</td>
+                <td>{{ teacher.name }}</td>
+                <td>{{ teacher.specialization}}</td>
+                <td>{{ teacher.course_name }}</td>
+                <td>{{ teacher.experience }}</td>
+                <td>{{ teacher.mobile_phone }}</td>
+                <td>{{ teacher.address }}</td>
+                <td>
+                    <!-- Edit Button - Link to edit_course page -->
+                    <a href="/teachers/edit/{{ teacher.id }}" class="btn btn-warning btn-sm">
+                        Edit <i class="bi bi-pencil ms-1"></i>
+                    </a>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="10">No Teachers found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<script>
+
+    // Toggle Select All Checkbox
+    function toggleSelectAll(selectAllCheckbox) {
+        let checkboxes = document.querySelectorAll('.select');
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = selectAllCheckbox.checked;
+        });
+    }
+
+    // Delete Selected Courses
+    function deleteSelected() {
+    let selected = [];
+    let checkboxes = document.querySelectorAll('.select:checked');
+
+    // Collect the IDs of selected courses
+    checkboxes.forEach(checkbox => {
+        selected.push(checkbox.dataset.courseId);
+    });
+
+    if (selected.length > 0) {
+        if (confirm('Are you sure you want to delete the selected courses?')) {
+            // Make a POST request to delete the selected courses
+            fetch('/teachers/delete', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ teacher_ids: selected }), // Pass selected IDs to the backend
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Remove the rows for deleted courses from the table
+                        checkboxes.forEach(checkbox => {
+                            checkbox.closest('tr').remove();
+                        });
+                        alert(data.message || 'Teachers deleted successfully.');
+                    } else {
+                        alert(data.message || 'Error deleting teachers.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Something went wrong while deleting.');
+                });
+        }
+    } else {
+        alert('No teachers selected.');
+    }
+}
+
+
+</script>
+{% endblock %}
+
+

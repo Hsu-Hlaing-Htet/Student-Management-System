@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Log In
+{% endblock %}
+
+{% block main %}
+{% include 'flash_message.html' %}
+<div class="card shadow-lg mx-auto" style="width: 100%; max-width: 400px;">
+    <div class="card-body">
+        <h2 class="text-center mb-4">Login</h2>
+        <form method="POST" action="/login">
+            <div class="mb-3">
+                <label for="username" class="form-label d-block text-start">Username</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label d-block text-start">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Enter your password" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100" >Login</button>
+            <div class="text-center mt-3">
+                <a href="/resetpassword" class="link-primary">Forgot Password?</a>
+                <a href="/signup" class="link-primary">Sign Up</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

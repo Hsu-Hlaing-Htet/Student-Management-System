@@ -1,0 +1,61 @@
+{% extends "index.html" %}
+
+{% block title %}
+Edit Teacher
+{% endblock %}
+
+{% block main %}
+<div class="container mt-4">
+    <h2 class="mb-4">Add Teacher</h2>
+    <form method="POST" enctype="multipart/form-data" class="shadow p-4 rounded bg-light">
+        <div class="row g-3">
+            <div class="col-md-4">
+                <label for="teacher_name" class="form-label">Name</label>
+                <input type="text" class="form-control" id="teacher_name" name="teacher_name" value="{{ teachers.name }}" required>
+            </div>
+
+            <div class="col-md-4">
+                <label for="specilization" class="form-label">Specialization</label>
+                <input type="text" class="form-control" id="specilization" name="specilization" value="{{ teachers.specialization }}" required>
+            </div>
+
+            <div class="col-md-4">
+                <label for="course_name" class="form-label">Course</label>
+                <select id="course_name" name="course_name" class="form-select" required>
+                    <option value="" disabled>Select Course</option>
+                    {% for course in courses %}
+                    <option value="{{ course.id }}" {% if course.id == teachers.course_id %}selected{% endif %}>
+                        {{ course.course_name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="row g-3 mt-3">
+            <div class="col-md-4">
+                <label for="experience" class="form-label">Experience</label>
+                <input type="text" class="form-control" id="experience" name="experience" value="{{ teachers.experience }}" required>
+            </div>
+            <div class="col-md-4">
+                <label for="mobile" class="form-label">Mobile Phone</label>
+                <input type="text" class="form-control" id="mobile" name="mobile" value="{{ teachers.mobile }}" required>
+            </div>
+        </div>
+
+        <div class="row g-3 mt-3">
+            <div class="col-md-12">
+                <label for="address" class="form-label">Address</label>
+                <textarea class="form-control" id="address" name="address" rows="3" required>{{ teachers.address }}</textarea>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-end mt-4">
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+            <button type="button" class="btn btn-secondary ms-3" onclick="location.href='/teachers'">Cancel</button>
+        </div>
+    </form>
+
+</div>
+
+{% endblock %}

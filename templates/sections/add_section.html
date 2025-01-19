@@ -1,0 +1,66 @@
+{% extends "index.html" %}
+
+{% block title %}
+    Add Section
+{% endblock %}
+
+{% block main %}
+<div class="container mt-4">
+    <h2 class="mb-4">Add Section</h2>
+    <form method="POST" enctype="multipart/form-data" class="shadow p-4 rounded bg-light">
+        <!-- Row for basic section details -->
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label for="section_name" class="form-label">Section Name</label>
+                <input type="text" class="form-control" id="section_name" name="section_name" required>
+            </div>
+            <div class="col-md-6">
+                <label for="course_name" class="form-label">Course</label>
+                <select id="course_name" name="course_name" class="form-select" required>
+                    <option value="" disabled selected>Select Course</option>
+                    {% for course in courses %}
+                    <option value="{{ course.id }}">{{ course.course_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+        </div>
+
+        <!-- Row for Teacher and Number of Students -->
+        <div class="row g-3 mt-3">
+            <div class="col-md-6">
+                <label for="teacher_name" class="form-label">Teacher Name</label>
+                <select id="teacher_name" name="teacher_name" class="form-select" required>
+                    <option value="" disabled selected>Select Teacher</option>
+                    {% for teacher in teachers %}
+                    <option value="{{ teacher.id }}">{{ teacher.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="room_name" class="form-label">Room Name</label>
+                <input type="text" class="form-control" id="room_name" name="room_name" required>
+            </div>
+        </div>
+
+        <!-- Row for Course Timings -->
+        <div class="row g-3 mt-3">
+            <div class="col-md-6">
+                <label for="start_time" class="form-label">Start Time</label>
+                <input type="time" class="form-control" id="start_time" name="start_time" required>
+            </div>
+            <div class="col-md-6">
+                <label for="end_time" class="form-label">End Time</label>
+                <input type="time" class="form-control" id="end_time" name="end_time" required>
+            </div>
+        </div>
+
+        <!-- Submit and Cancel Buttons -->
+        <div class="text-end mt-4">
+            <button type="submit" class="btn btn-primary">Add Section</button>
+            <button type="button" class="btn btn-secondary ms-3" onclick="location.href='/sections'">Cancel</button>
+        </div>
+    </form>
+</div>
+
+{% endblock %}

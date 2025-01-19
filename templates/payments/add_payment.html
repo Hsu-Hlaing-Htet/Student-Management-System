@@ -1,0 +1,64 @@
+{% extends "index.html" %}
+{% block title %}
+    Add Payment
+{% endblock %}
+
+{% block main %}
+{% include 'flash_message.html' %}
+<div class="container py-2">
+    <h2 class="mb-4">Add Payment</h2>
+    <form method="POST" enctype="multipart/form-data" action="/payments/add" class="shadow p-4 rounded bg-light">
+        <!-- Row for basic course details -->
+        <div class="row g-4">
+            <div class="col-md-6">
+                <label for="student_name" class="form-label">Student</label>
+                <select id="student_name" name="student_name" class="form-select" required>
+                    <option value="" disabled selected>Select Student</option>
+                    <!-- Loop through students -->
+                    {% for student in students %}
+                    <option value="{{ student.id }}">{{ student.student_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="section_name" class="form-label">Section</label>
+                <select id="section_name" name="section_name" class="form-select" required>
+                    <option value="" disabled selected>Select Section</option>
+                    <!-- Loop through courses -->
+                    {% for section in sections %}
+                    <option value="{{ section.id }}">{{ section.section_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="row g-3 mt-3">
+            <div class="col-md-4">
+                <label for="payment_date" class="form-label">Payment Date</label>
+                <input type="date" class="form-control" id="payment_date" name="payment_date" required>
+            </div>
+            <div class="col-md-4">
+                <label for="payment_amount" class="form-label">Payment Amount</label>
+                <input type="text" class="form-control" id="payment_amount" name="payment_amount" placeholder="Enter Payment Amount" required>
+            </div>
+            <div class="col-md-4">
+                <label for="payment_method" class="form-label">Payment Method</label>
+                <select id="payment_method" name="payment_method" class="form-select" required>
+                    <option value="" disabled selected>Select Method</option>
+                    <option value="MPU">MPU (Myanmar Payment Union)</option>
+                    <option value="Cash">Cash</option>
+                    <option value="Credit Card">Credit Card</option>
+                    <option value="Bank Transfer">Bank Transfer</option>
+                </select>
+            </div>
+        </div>
+
+
+        <!-- Submit and Cancel Buttons -->
+        <div class="d-flex justify-content-end mt-4">
+            <button type="submit" class="btn btn-primary">Add Payment</button>
+            <button type="button" class="btn btn-secondary ms-3" onclick="location.href='/payments'">Cancel</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

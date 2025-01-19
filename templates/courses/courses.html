@@ -1,0 +1,131 @@
+{% extends "index.html" %}
+
+{% block title %}
+Courses
+{% endblock %}
+
+{% block main %}
+{% include 'flash_message.html' %}
+<div class="container">
+    <!-- Header Section -->
+    <div class="row mb-4">
+        <div class="col-12 d-flex justify-content-between align-items-center">
+            <h2 class="mb-0">Courses</h2>
+            <h5 class="mb-0 text-muted">Course / All Courses</h5>
+        </div>
+    </div>
+
+    <!-- Action Buttons Section -->
+    <div class="row mb-3">
+        <div class="col-12 d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Manage Courses</h5>
+            <div>
+                <button class="btn btn-success btn-sm me-2" onclick="location.href='/courses/add'">
+                    Add <i class="bi bi-plus ms-1"></i>
+                </button>
+                <button class="btn btn-danger btn-sm" onclick="deleteSelected()">
+                    Delete <i class="bi bi-trash ms-1"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Table Section -->
+    <table class="table table-striped shadow p-4 rounded">
+        <thead class="table-light">
+            <tr>
+                <th><input type="checkbox" class="selectall" onclick="toggleSelectAll(this)"></th>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Fee Amount</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Description</th>
+                <th>Action</th> <!-- Added for Edit button -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for course in courses %}
+            <tr>
+                <td><input type="checkbox" class="select" data-course-id="{{ course.id }}"></td>
+                <td>{{ loop.index }}</td>
+                <td>{{ course.course_name }}</td>
+                <td>{{ course.course_fee }}</td>
+                <td>{{ course.start_date }}</td>
+                <td>{{ course.end_date }}</td>
+                <td>{{ course.start_time }}</td>
+                <td>{{ course.end_time }}</td>
+                <td>{{ course.description }}</td>
+                <td>
+                    <!-- Edit Button - Link to edit_course page -->
+                    <a href="/courses/edit/{{ course.id }}" class="btn btn-warning btn-sm">
+                        Edit <i class="bi bi-pencil ms-1"></i>
+                    </a>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="10">No courses found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+
+    // Toggle Select All Checkbox
+    function toggleSelectAll(selectAllCheckbox) {
+        let checkboxes = document.querySelectorAll('.select');
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = selectAllCheckbox.checked;
+        });
+    }
+
+    // Delete Selected Courses
+    function deleteSelected() {
+    let selected = [];
+    let checkboxes = document.querySelectorAll('.select:checked');
+
+    // Collect the IDs of selected courses
+    checkboxes.forEach(checkbox => {
+        selected.push(checkbox.dataset.courseId);
+    });
+
+    if (selected.length > 0) {
+        if (confirm('Are you sure you want to delete the selected courses?')) {
+            // Make a POST request to delete the selected courses
+            fetch('/courses/delete', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ course_ids: selected }), // Pass selected IDs to the backend
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Remove the rows for deleted courses from the table
+                        checkboxes.forEach(checkbox => {
+                            checkbox.closest('tr').remove();
+                        });
+                        alert(data.message || 'Courses deleted successfully.');
+                    } else {
+                        alert(data.message || 'Error deleting courses.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Something went wrong while deleting.');
+                });
+        }
+    } else {
+        alert('No courses selected.');
+    }
+}
+
+
+</script>
+{% endblock %}

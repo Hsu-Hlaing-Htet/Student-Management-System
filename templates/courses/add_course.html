@@ -1,0 +1,60 @@
+{% extends "index.html" %}
+
+{% block title %}
+    Add Course
+{% endblock %}
+
+{% block main %}
+<div class="container py-2">
+    <h2 class="mb-4">Add Course</h2>
+    <form method="POST" enctype="multipart/form-data" action="/courses/add" class="shadow p-4 rounded bg-light">
+        <!-- Row for basic course details -->
+        <div class="row g-4">
+            <div class="col-md-6">
+                <label for="course_name" class="form-label">Course Name</label>
+                <input type="text" class="form-control" id="course_name" name="course_name" placeholder="Enter course name" required>
+            </div>
+            <div class="col-md-6">
+                <label for="course_fee" class="form-label">Course Fee</label>
+                <input type="text" class="form-control" id="course_fee" name="course_fee" placeholder="Enter course fee" required>
+            </div>
+        </div>
+
+        <!-- Row for Course Duration -->
+        <div class="row g-4 mt-3">
+            <div class="col-md-6">
+                <label for="start_date" class="form-label">Start Date</label>
+                <input type="date" class="form-control" id="start_date" name="start_date" required>
+            </div>
+            <div class="col-md-6">
+                <label for="end_date" class="form-label">End Date</label>
+                <input type="date" class="form-control" id="end_date" name="end_date" required>
+            </div>
+        </div>
+
+        <!-- Row for Course Timings -->
+        <div class="row g-4 mt-3">
+            <div class="col-md-6">
+                <label for="start_time" class="form-label">Start Time</label>
+                <input type="time" class="form-control" id="start_time" name="start_time" required>
+            </div>
+            <div class="col-md-6">
+                <label for="end_time" class="form-label">End Time</label>
+                <input type="time" class="form-control" id="end_time" name="end_time" required>
+            </div>
+        </div>
+
+        <!-- Row for Description -->
+        <div class="mt-4">
+            <label for="description" class="form-label">Course Description</label>
+            <textarea class="form-control" id="description" name="description" rows="4" placeholder="Provide a brief description of the course" required></textarea>
+        </div>
+
+        <!-- Submit and Cancel Buttons -->
+        <div class="d-flex justify-content-end mt-4">
+            <button type="submit" class="btn btn-primary">Add Course</button>
+            <button type="button" class="btn btn-secondary ms-3" onclick="location.href='/courses'">Cancel</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

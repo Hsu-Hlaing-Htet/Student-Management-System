@@ -1,0 +1,66 @@
+{% extends "index.html" %}
+
+{% block title %}
+    Edit Section
+{% endblock %}
+
+{% block main %}
+<div class="container mt-4">
+    <h2 class="mb-4">Edit Section</h2>
+    <form method="post" enctype="multipart/form-data" class="shadow p-4 rounded bg-light">
+        <!-- Section Details -->
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label for="section_name" class="form-label">Section Name</label>
+                <input type="text" class="form-control" id="section_name" name="section_name" value="{{ sections.section_name }}" required>
+            </div>
+            <div class="col-md-6">
+                <label for="course_name" class="form-label">Course</label>
+                <select id="course_name" name="course_name" class="form-select" required>
+                    <option value="" disabled>Select Course</option>
+                    {% for course in courses %}
+                    <option value="{{ course.id }}" {% if course.id == sections.course_id %}selected{% endif %}>{{ course.course_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <!-- Teacher and Room -->
+        <div class="row g-3 mt-3">
+            <div class="col-md-6">
+                <label for="teacher_name" class="form-label">Teacher</label>
+                <select id="teacher_name" name="teacher_name" class="form-select" required>
+                    <option value="" disabled>Select Teacher</option>
+                    {% for teacher in teachers %}
+                    <option value="{{ teacher.id }}" {% if teacher.id == sections.teacher_id %}selected{% endif %}>{{ teacher.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="room_name" class="form-label">Room Name</label>
+                <input type="text" class="form-control" id="room_name" name="room_name" value="{{ sections.room_name }}" required>
+            </div>
+        </div>
+
+        <!-- Time Details -->
+        <div class="row g-3 mt-3">
+            <div class="col-md-6">
+                <label for="start_time" class="form-label">Start Time</label>
+                <input type="time" class="form-control" id="start_time" name="start_time" value="{{ sections.start_time }}" required>
+            </div>
+            <div class="col-md-6">
+                <label for="end_time" class="form-label">End Time</label>
+                <input type="time" class="form-control" id="end_time" name="end_time" value="{{ sections.end_time }}" required>
+            </div>
+        </div>
+
+        <!-- Submit Buttons -->
+        <div class="row g-3 mt-3">
+            <div class="col-md-12 text-end">
+                <button type="submit" class="btn btn-primary">Update Section</button>
+                <button type="button" class="btn btn-secondary ms-3" onclick="location.href='/sections'">Cancel</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+<div class="card shadow-lg mx-auto" style="width: 100%; max-width: 400px;">
+    <div class="card-body">
+        <h2 class="text-center mb-4">Sign Up</h2>
+        <form method="POST" action="/signup">
+            <div class="mb-3">
+                <label for="username" class="form-label d-block text-start">Username</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="Choose a username" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label d-block text-start">Email</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label d-block text-start">Password</label>
+                <input type="password" class="form-control" id="password" name="password" placeholder="Create a password" required>
+            </div>
+            <div class="mb-3">
+                <label for="confirm_password" class="form-label d-block text-start">Confirm Password</label>
+                <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm your password" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+            <div class="text-center mt-3">
+                <a href="/login" class="link-primary">Already have an account? Login</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
