@@ -1,8 +1,7 @@
 
 # Student Management System
-
-## Overview
-This web-based Student Management System is designed to help schools manage their students, teachers, courses, sections, and payments efficiently. It provides an intuitive dashboard for tracking student and staff data, along with tools for managing attendance, grades, and payroll.
+#### Video Demo: https://youtu.be/SGLG6QBsbc4?si=6k0yyPO2SycbDe0b 
+#### Description: This web-based Student Management System is designed to help schools manage their students, teachers, courses, sections, and payments efficiently. It provides an intuitive dashboard for tracking student and teacher data, along with tools for managing sections, courses, and payrolls.
 
 ## Table of Contents
 - [Features](#features)
