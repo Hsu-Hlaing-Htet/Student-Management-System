@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 # Student Management System
 
 ## Overview
